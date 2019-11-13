@@ -1,0 +1,13 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.van-nav-bar {
+  background-color: #3296fa;
+}
+.van-nav-bar .van-ellipsis {
+  color: #fff;
+}
+.van-nav-bar .van-nav-bar__text {
+  color: #fff;
+}
