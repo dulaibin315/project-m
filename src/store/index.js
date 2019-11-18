@@ -5,7 +5,7 @@ import * as myStorage from '@/untils/getData.js'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    myToken: myStorage.getUser() || ''
+    myToken: myStorage.getUser()
   },
   mutations: {
     // 修改token

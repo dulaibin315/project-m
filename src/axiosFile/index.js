@@ -20,7 +20,7 @@ const myAxios = axios.create({
 
 // 请求拦截器
 myAxios.interceptors.request.use((config) => {
-  if (store.state.myToken) {
+  if (store.state.myToken.token) {
     config.headers.Authorization = `Bearer ${store.state.myToken.token}`
     return config
   }
@@ -36,7 +36,18 @@ myAxios.interceptors.response.use(res => {
   }
 }, async err => {
   // token失效
-  if (err.status === 401) {
+  if (err.response && err.response.status === 401) {
+    //
+    if (!store.state.myToken || !store.state.myToken.refresh_token) {
+      // 拦截到登录
+      return router.push({
+        path: '/login',
+        query: {
+          backURL: router.currentRoute.path
+        }
+      })
+    }
+    // token失效
     try {
       const msg = await axios({
         headers: {
@@ -52,16 +63,6 @@ myAxios.interceptors.response.use(res => {
       })
       return msg
     } catch (e) {}
-  }
-  // token和refresh_token都失效
-  if (!store.state.myToken && router.currentRoute.path !== '/login') {
-    router.push({
-      path: '/login',
-      query: {
-        backURL: router.currentRoute.path
-      }
-    })
-    return false
   }
   return Promise.reject(err)
 })

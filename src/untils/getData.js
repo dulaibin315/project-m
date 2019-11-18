@@ -3,7 +3,7 @@ const myNum = 'project-m-dulaibin'
 
 // 获取存储的方法
 export const getUser = () => {
-  return JSON.parse(window.localStorage.getItem(myNum))
+  return JSON.parse(window.localStorage.getItem(myNum) || '{}')
 }
 // 修改存储的方法
 export const setUser = (user) => {

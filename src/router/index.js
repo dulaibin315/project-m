@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
-import {
-  getUser
-} from '@/untils/getData.js'
+// import {
+//   getUser
+// } from '@/untils/getData.js'
 
 Vue.use(VueRouter)
 const Home = () => import('@/views/home')
@@ -49,7 +49,7 @@ const router = new VueRouter({
 // 前置导航守卫
 router.beforeEach((to, from, next) => {
   // 判断vuex中的token不存在且跳转路径是‘/user’开头的
-  if (!getUser() && to.path.startsWith('/user')) {
+  if (!store.state.myToken && to.path.startsWith('/user')) {
     store.commit('setUser', {})
     return next({
       // 拦截至'/login'页面
